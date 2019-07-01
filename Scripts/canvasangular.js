@@ -132,7 +132,7 @@ var app = angular.module("demo", []);
 					var textwidth=0;
 					
 					ctx.scale(cwidth/1920,cheight/1080);
-					//ctx.translate(newx,newy);
+					//ctx.translate(-100,-50);
 
 					//var verlegth=[];
 					var horlength=[];
@@ -160,7 +160,7 @@ var app = angular.module("demo", []);
 						}
 						totalvalue=totalvalue+Number(json[i].value);
 						strings=json[i].status;
-						ctx.fillText(strings, 100, 100*(i+1));
+						ctx.fillText(strings, 100, 45*(i+1));
 
 					}
 					
@@ -169,7 +169,7 @@ var app = angular.module("demo", []);
 					
 					var barsize=jsonconfig[7].value;         //size of the small bar
 					var nbar=0;				//number of bar
-					var vpix=80			//vertical start pixel at for bar
+					var vpix=20			//vertical start pixel at for bar
 					var scaleing=1;         //scaling number for dynamic page
 					if(maxvalue>c.width){
 						scaleing=maxvalue/(1920-maxwidth-100-5);			
@@ -183,7 +183,7 @@ var app = angular.module("demo", []);
 					imagePaper.src = "Img/bar4.jpg";
 
 					imagePaper.onload = function(){
-						vpix=80;
+						vpix=25;
 						for(var i=0;i<json.length;i++){
 							var hpix=textwidth+100+15; //horizontal pixel start at for bar
 							
@@ -201,14 +201,14 @@ var app = angular.module("demo", []);
 								hpix+=barsize*2;
 							}
 
-							
+
 							var tempvalue1=(Number(json[i].value)/totalvalue)*100
 							tempvalue1=tempvalue1.toFixed(2);
 							var tempvalue="("+tempvalue1+"%)";
-							ctx.fillText(tempvalue, hpix, 100*(i+1));
+							ctx.fillText(tempvalue, hpix, 45*(i+1));
 
 							horlength.push(hpix+75);//something needs to be done here for alignment
-							vpix+=100;
+							vpix+=43;
 						}
 					}
 					
