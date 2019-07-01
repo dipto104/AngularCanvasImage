@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html  ng-app="demo" ng-controller="testCtrl">
+<head >
+	<title>Angular Js Demo app</title>
+  <script src="Scripts/angular.min.js"> </script>
+  <script src="Scripts/require.js"> </script>
+	
+	
+	<style>
+		.row{
+			display:inline-block; /* to make sure rows' stars appear next to each other */
+			}
+			
+		.row2{	
+			display:inline-block;
+			
+			  
+		}
+	</style>
+	
+
+</head>
+
+<body >
+	
+	<div>
+      <div class="flex-control-nav" >
+        <!-- <label for="number">Number</label>
+        <input class="form-control" type="number" id="number" ng-model="givenNumber" ng-change="printStars()"> 
+
+        <label for="width">Width</label>
+        <input class="form-control" type="number" id="width" ng-model="width" ng-change="printStars()">
+
+        <label for="height">Height</label>
+        <input class="form-control" type="number" id="height" ng-model="height" ng-change="printStars()">
+        
+        
+        
+        
+        <label for="height">Background Color</label>
+        <select ng-model="bcname" ng-change="bcchange()" ng-options="x for x in colornames">
+        </select>-->
+        <button type="button" id="btn" ng-click="refresh()">Refresh</button>
+        <button type="button" id="btn" ng-click="startpage()">Start</button>
+
+        
+        
+        <div>
+          <canvas ng-style="mybody" id="myCanvas"  style="border:1px solid #d3d3d3;">
+          Your browser does not support the HTML5 canvas tag.
+              
+          </canvas>
+      </div>
+      </div>
+ 
+ 
+</div>
+
+
+	
+	
+	
+
+</body>
+<script src="Data/input.json"></script>
+<script src="Scripts/canvasangular.js"> </script>
+
+
+</html>
