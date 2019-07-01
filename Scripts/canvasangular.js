@@ -129,6 +129,7 @@ var app = angular.module("demo", []);
 
 					var maxwidth=0;
 					var maxvalue=0;
+					var textwidth=0;
 					
 					ctx.scale(cwidth/1920,cheight/1080);
 					//ctx.translate(newx,newy);
@@ -139,7 +140,7 @@ var app = angular.module("demo", []);
 					var verlegth=0;
 					
 
-						
+					var totalvalue=0;
 
 					for(var i=0;i<json.length;i++){//printing the status and value member of json
 						var tempfont=jsonconfig[2].value+' '+jsonconfig[1].value+' '+jsonconfig[0].value;
@@ -151,10 +152,14 @@ var app = angular.module("demo", []);
 
 						if(ctx.measureText(strings).width>maxwidth){
 							maxwidth=ctx.measureText(strings).width;
+							var tempstr=json[i].status;
+							textwidth=ctx.measureText(tempstr).width;
 						} 
 						if(Number(json[i].value)>maxvalue){
 							maxvalue=Number(json[i].value);      //updating the max value of json
 						}
+						totalvalue=totalvalue+Number(json[i].value);
+						strings=json[i].status;
 						ctx.fillText(strings, 100, 100*(i+1));
 
 					}
@@ -175,12 +180,12 @@ var app = angular.module("demo", []);
 
 
 					var imagePaper = new Image();
-					imagePaper.src = "Img/Back2.jpg";
+					imagePaper.src = "Img/bar4.jpg";
 
 					imagePaper.onload = function(){
 						vpix=80;
 						for(var i=0;i<json.length;i++){
-							var hpix=maxwidth+100+5; //horizontal pixel start at for bar
+							var hpix=textwidth+100+15; //horizontal pixel start at for bar
 							
 							var value=Number(json[i].value) ;
 							//scaleing=1;
@@ -196,11 +201,17 @@ var app = angular.module("demo", []);
 								hpix+=barsize*2;
 							}
 
+							
+							var tempvalue1=(Number(json[i].value)/totalvalue)*100
+							tempvalue1=tempvalue1.toFixed(2);
+							var tempvalue="("+tempvalue1+"%)";
+							ctx.fillText(tempvalue, hpix, 100*(i+1));
 
-							horlength.push(hpix+75);
+							horlength.push(hpix+75);//something needs to be done here for alignment
 							vpix+=100;
 						}
 					}
+					
 
 
 
