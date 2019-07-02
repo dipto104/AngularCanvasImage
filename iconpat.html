@@ -26,7 +26,7 @@
 
 <body >
     
-	<div ng-app="demo" ng-controller="testCtrl" >
+	<div ng-app="demo" ng-controller="testCtrl"  >
       
       <div class="flex-control-nav" >
         <!-- <label for="number">Number</label>
@@ -45,16 +45,21 @@
         <select ng-model="bcname" ng-change="bcchange()" ng-options="x for x in colornames">
         </select>-->
         <button type="button" id="btn" ng-click="refresh()">Refresh</button>
-        <button type="button" id="btn" ng-click="startpage()">Start</button>
+        <!--<button type="button" id="btn" ng-click="startpage()">Start</button>-->
 
         
         
         <div>
-          <canvas ng-style="mybody" id="myCanvas"  style="border:1px solid #d3d3d3;">
+          <canvas ng-style="mybody" id="myCanvas" ng-init=myrunner('myCanvas','Data/input.json')  style="border:1px solid #d3d3d3;">
           Your browser does not support the HTML5 canvas tag.
               
           </canvas>
-      </div>
+        </div>
+        <div>
+          <canvas ng-style="mybody" id="myCanvas2" ng-init=myrunner('myCanvas2','Data/input2.json') style="border:1px solid #d3d3d3;">
+          Your browser does not support the HTML5 canvas tag.            
+          </canvas>
+        </div>
       </div>
  
  

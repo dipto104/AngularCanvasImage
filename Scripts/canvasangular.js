@@ -4,65 +4,52 @@ var app = angular.module("demo", []);
 		   $scope.rows = []; // init empty array
 		   $scope.datainput =[];
 		   $scope.dataconfig =[];
-		  
 
-		   $scope.colornames = ["AliceBlue ",
-								"Aqua", 
-								"Azure",
-								"Aquamarine",
-								"Red",
-								"Blue",
-								"Beige",
-								"CornflowerBlue ",
-								"Coral",
-								"DarkBlue ",
-								"DarkCyan ", 
-								"DarkSalmon ",
-								];
-	
-
-
-		$http({
-			method: 'GET',
-			url: 'http://localhost:5000/database'
-		}).then(function (data){
-		},function (error){
-		console.log("big error");
-		});
-
-		
-
-		$http({
-			method: 'GET',
-			url: 'Data/input.json'
-		}).then(function (data){
-		$scope.datainput=data.data;
-		console.log($scope.datainput);
-		},function (error){
-		console.log("big err");
-		});
-
-		/*datatemp=[
-			{status:"payfail",value:500},
-			{status:"payinit",value:250},
-			{status:"paysuccess",value:1000},
-			{status:"payreturn",value:50}
 			
-		];*/
+		    
 
-		//$scope.datainput=datatemp;
+			
+			
 
-		$http({
-			method: 'GET',
-			url: 'Data/config.json'
-		}).then(function (config){
-		$scope.dataconfig=config.data;
-		//console.log($scope.datainput);
-		},function (error){
-		console.log("config error");
-		});
+			$scope.myrunner =function(canvasid,inputurl){
 
+				var flag=0;
+				$http({
+				method: 'GET',
+				url: 'http://localhost:5000/database'
+				}).then(function (data){
+				},function (error){
+				console.log("big error");
+				});
+				$http({
+					method: 'GET',
+					url: inputurl
+				}).then(function (data){
+				$scope.datainput=data.data;
+				console.log($scope.datainput);
+				},function (error){
+				console.log("big err");
+				});
+				
+				
+				$http({
+					method: 'GET',
+					url: 'Data/config.json'
+				}).then(function (config){
+				$scope.dataconfig=config.data;
+				$scope.init(canvasid);//this is the previous function 
+				console.log($scope.datainput);
+				},function (error){
+				console.log("config error");
+				});
 
+						
+			}
+				
+
+				
+
+			
 		
 		
 
@@ -72,31 +59,12 @@ var app = angular.module("demo", []);
 				
 			}
 
-			$scope.bcchange=function(){
-				var color=$scope.bcname;
-				var jsonconfig=JSON.parse(JSON.stringify($scope.dataconfig));
-				console.log(jsonconfig[5].value);
-
-				$scope.mybody = {
-				
-					"background-color" : jsonconfig[5].value,
-					"background-image": "Img/Back1.jpg"
-					
-				}
-			}
-
-			/*$scope.changefont=function(){
-				$scope.mybody = {
-				
-					"font" : " 15px sans-serif",
-					"background-color" : $scope.bcname
-					
-				}
-				console.log("fontclick");
-			}*/
 			
+
 			
-			$window.onload = function() {
+			$scope.init = function(canvasid) {
+				
+
 				var json=JSON.parse(JSON.stringify($scope.datainput));
 
 				var jsonconfig=JSON.parse(JSON.stringify($scope.dataconfig));
@@ -121,7 +89,7 @@ var app = angular.module("demo", []);
 				var newy;
 				
 				for(var k=0;k<=1;k++){
-					var c = document.getElementById("myCanvas");
+					var c = document.getElementById(canvasid);
 					c.width=cwidth;
 					c.height=cheight;
 					
@@ -292,5 +260,8 @@ var app = angular.module("demo", []);
 			  
 			
    }
-   //$scope.changefont();
+
+   
+   //$scope.myrunner();
+ 
 		});
