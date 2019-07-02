@@ -1,9 +1,10 @@
 var app = angular.module("demo", []);
-		app.controller("testCtrl", function($scope,$http) {
+		app.controller("testCtrl", function($scope,$http,$window) {
 		   $scope.temp = "";
 		   $scope.rows = []; // init empty array
 		   $scope.datainput =[];
 		   $scope.dataconfig =[];
+		  
 
 		   $scope.colornames = ["AliceBlue ",
 								"Aqua", 
@@ -20,14 +21,25 @@ var app = angular.module("demo", []);
 								];
 	
 
+
 		$http({
 			method: 'GET',
 			url: 'http://localhost:5000/database'
 		}).then(function (data){
+		},function (error){
+		console.log("big error");
+		});
+
+		
+
+		$http({
+			method: 'GET',
+			url: 'Data/input.json'
+		}).then(function (data){
 		$scope.datainput=data.data;
 		console.log($scope.datainput);
 		},function (error){
-		console.log("big error");
+		console.log("big err");
 		});
 
 		/*datatemp=[
@@ -84,7 +96,7 @@ var app = angular.module("demo", []);
 			}*/
 			
 			
-		   $scope.startpage = function() {
+			$window.onload = function() {
 				var json=JSON.parse(JSON.stringify($scope.datainput));
 
 				var jsonconfig=JSON.parse(JSON.stringify($scope.dataconfig));
@@ -141,33 +153,41 @@ var app = angular.module("demo", []);
 					
 
 					var totalvalue=0;
+					var statuswidth=0;
 
 					for(var i=0;i<json.length;i++){//printing the status and value member of json
 						var tempfont=jsonconfig[2].value+' '+jsonconfig[1].value+' '+jsonconfig[0].value;
 						ctx.font = tempfont;
 						
 						var strings=json[i].status+"("+json[i].value+")";
-						
-						
+						var statustring=json[i].status;
+
+						if(ctx.measureText(statustring).width>statuswidth){
+							statuswidth=ctx.measureText(statustring).width;
+						}	
 
 						if(ctx.measureText(strings).width>maxwidth){
 							maxwidth=ctx.measureText(strings).width;
 							var tempstr=json[i].status;
 							textwidth=ctx.measureText(tempstr).width;
 						} 
+
 						if(Number(json[i].value)>maxvalue){
 							maxvalue=Number(json[i].value);      //updating the max value of json
 						}
 						totalvalue=totalvalue+Number(json[i].value);
-						strings=json[i].status;
-						ctx.fillText(strings, 100, 45*(i+1));
+						
 
 					}
-					
-					
+
+					for(var i=0;i<json.length;i++){
+						strings=json[i].status;
+						var tempval=(statuswidth-ctx.measureText(strings).width);
+						ctx.fillText(strings, 100+tempval, 45*(i+1));
+					}
 					maxvalue=maxvalue+maxvalue+maxwidth+100+5;//maxvalue is the higest range of pixel of bar
 					
-					var barsize=jsonconfig[7].value;         //size of the small bar
+					var barsize=Number(jsonconfig[7].value);         //size of the small bar
 					var nbar=0;				//number of bar
 					var vpix=20			//vertical start pixel at for bar
 					var scaleing=1;         //scaling number for dynamic page
@@ -198,7 +218,7 @@ var app = angular.module("demo", []);
 							for(var j=0;j<nbar;j++){
 								ctx.drawImage(imagePaper,hpix,vpix,barsize,barsize);
 								//ctx.fillRect(hpix,vpix,barsize,barsize);
-								hpix+=barsize*2;
+								hpix+=barsize*1.2;
 							}
 
 
@@ -208,7 +228,7 @@ var app = angular.module("demo", []);
 							ctx.fillText(tempvalue, hpix, 45*(i+1));
 
 							horlength.push(hpix+75);//something needs to be done here for alignment
-							vpix+=43;
+							vpix+=45;
 						}
 					}
 					

@@ -58,8 +58,15 @@ app.get('/database', function (req, res) {
   
         res.send(recordset.recordset);
         
-        var temp=JSON.parse(JSON.stringify(recordset.recordset));
-        console.log(temp[0].status);
+        var temp=JSON.stringify(recordset.recordset);
+
+        var fs = require('fs');
+        fs.writeFile('Data/input.json', temp, 'utf8', function(err) {
+            if (err) throw err;
+            console.log('complete');
+            }
+        );
+        //console.log(temp[0].status);
         console.log(recordset.recordset);     
         
         

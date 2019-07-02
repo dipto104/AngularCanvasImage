@@ -1,7 +1,1 @@
-[
-    {"status":"payfail","value":"400"},
-    {"status":"payinit","value":"200"},
-    {"status":"paysuccess","value":"350"},
-    {"status":"payreturn","value":"700"}
-    
-]
+[{"status":"PAY_FAIL","value":6195},{"status":"PAY_SUCCESS","value":866},{"status":"PM_REQUESTED","value":11121},{"status":"PAY_INIT","value":990}]
